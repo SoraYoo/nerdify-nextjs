@@ -1,0 +1,37 @@
+name: Deploy Nerdify to Main
+
+on:
+  push:
+    branches:
+      - main   # dev 브랜치에 push/merge 시만 실행
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v3
+
+      - name: Copy source to Dev Server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: 211.227.100.162  # github action 에서 설정한 값
+          username: root  # github action 에서 설정한 값
+          key: ${{ secrets.SERVER_SSH_KEY }}  # github action 에서 설정한 값
+          source: ".env.development"
+          target: "/data/p_nerdify/nerdify-nextjs/.env.local"
+
+      - name: Build and Restart pm2
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: 211.227.100.162
+          username: root
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          script: |
+            cd /data/p_nerdify/nerdify-nextjs
+            git fetch origin main
+            git reset --hard origin/main
+            npm install
+            npm run build
+            pm2 restart nerdify-nextjs-app || pm2 start npm --name "nerdify-nextjs-app" -- run start

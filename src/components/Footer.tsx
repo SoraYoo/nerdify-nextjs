@@ -43,7 +43,7 @@ export default function Footer() {
                 </svg>
               </a>
               <a
-                href="mailto:sam.where.are.you@gmail.com"
+                href="mailto:hi@samwhereareyou.art"
                 className="bg-gray-800 hover:bg-gray-700 p-3 rounded-full transition-colors"
               >
                 <Mail className="w-5 h-5" />
