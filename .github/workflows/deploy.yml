@@ -20,8 +20,8 @@ jobs:
           port: 2223
           username: root  # github action 에서 설정한 값
           key: ${{ secrets.SERVER_SSH_KEY }}  # github action 에서 설정한 값
-          source: ".env.local"
-          target: "/data/p_nerdify/nerdify-nextjs/.env.local"
+          source: ".env.production"
+          target: "/data/p_nerdify/nerdify-nextjs/.env.production"
 
       - name: Build and Restart pm2
         uses: appleboy/ssh-action@v0.1.10
@@ -32,6 +32,7 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
             cd /data/p_nerdify/nerdify-nextjs
+            cp .env.production .env.local
             git fetch origin main
             git reset --hard origin/main
             npm install
