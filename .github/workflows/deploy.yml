@@ -17,6 +17,7 @@ jobs:
         uses: appleboy/scp-action@v0.1.7
         with:
           host: 211.227.100.162  # github action 에서 설정한 값
+          port: 2223
           username: root  # github action 에서 설정한 값
           key: ${{ secrets.SERVER_SSH_KEY }}  # github action 에서 설정한 값
           source: ".env.local"
@@ -26,6 +27,7 @@ jobs:
         uses: appleboy/ssh-action@v0.1.10
         with:
           host: 211.227.100.162
+          port: 2223
           username: root
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
