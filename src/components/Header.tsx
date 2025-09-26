@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Menu, X, Globe } from 'lucide-react';
+import Link from 'next/link';
 
 
 export default function Header() {
@@ -14,9 +15,9 @@ export default function Header() {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <a href="/">
+            <Link href="/">
                 <h1 className="text-xl md:text-2xl font-bold text-white custom-title-font">Sam, Where are you?</h1>
-            </a>
+            </Link>
           </div>
 
           {/* Desktop Navigation */}
@@ -46,18 +47,18 @@ export default function Header() {
               </button>
               {isLanguageOpen && (
                 <div className="absolute right-0 mt-2 w-32 bg-black rounded-md shadow-lg border border-gray-800">
-                  <a
+                  <Link
                     href="/"
                     className="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-800 custom-basic-font"
                   >
                     🇰🇷 한국어
-                  </a>
-                  <a
+                  </Link>
+                  <Link
                     href="/"
                     className="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-800 custom-basic-font"
                   >
                     🇺🇸 English
-                  </a>
+                  </Link>
                 </div>
               )}
             </div>
@@ -108,12 +109,12 @@ export default function Header() {
               </a>
               <div className="px-3 py-2">
                 <div className="flex space-x-4">
-                  <a href="/" className="text-sm text-gray-200 hover:text-white custom-basic-font">
+                  <Link href="/" className="text-sm text-gray-200 hover:text-white custom-basic-font">
                     🇰🇷 한국어
-                  </a>
-                  <a href="/" className="text-sm text-gray-200 hover:text-white custom-basic-font">
+                  </Link>
+                  <Link href="/" className="text-sm text-gray-200 hover:text-white custom-basic-font">
                     🇺🇸 English
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>

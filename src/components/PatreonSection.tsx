@@ -13,10 +13,10 @@ export default function PatreonSection() {
               PATREON
             </h2>
             <p className="text-base text-gray-200 mb-6 leading-tight md:leading-snug">
-              By supporting us on Patreon, you're not just helping us continue doing what we love; you're becoming an integral part of our journey. Your contributions enable us to create better content, explore new horizons, and build a stronger connection with you. We're excited to share this adventure with you, and we can't wait to welcome you into our Patreon family.
+              By supporting us on Patreon, you&apos;re not just helping us continue doing what we love; you&apos;re becoming an integral part of our journey. Your contributions enable us to create better content, explore new horizons, and build a stronger connection with you. We&apos;re excited to share this adventure with you, and we can&apos;t wait to welcome you into our Patreon family.
             </p>
             <p className="text-base text-gray-200 mb-8 md:mb-12 leading-tight md:leading-snug">
-              Some benefits you'll have as a Patron are access to a Private Video Call With Us, Behind The Scenes Videos, Recipes, Lifestyle & Travel Content, Decision Making, our Mixes on Soundcloud and much more.
+              Some benefits you&apos;ll have as a Patron are access to a Private Video Call With Us, Behind The Scenes Videos, Recipes, Lifestyle &amp; Travel Content, Decision Making, our Mixes on Soundcloud and much more.
             </p>
             <button 
               className="bg-white text-black px-8 py-4 rounded-full font-semibold text-base transition-colors hover:bg-gray-100"

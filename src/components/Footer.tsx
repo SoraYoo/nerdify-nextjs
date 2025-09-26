@@ -1,6 +1,6 @@
 'use client';
 
-import { Instagram, Youtube, Mail, Heart, Music } from 'lucide-react';
+import { Instagram, Youtube, Mail } from 'lucide-react';
 
 export default function Footer() {
 
