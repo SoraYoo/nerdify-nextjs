@@ -56,7 +56,7 @@ export default function YouTubeForm() {
       });
       if (!res.ok) throw new Error('저장 실패');
       alert('유튜브 섹션이 저장되었습니다.');
-    } catch (err) {
+    } catch {
       alert('저장 중 오류가 발생했습니다.');
     } finally {
       setSaving(false);

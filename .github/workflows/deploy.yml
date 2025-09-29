@@ -31,6 +31,7 @@ jobs:
           username: root
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
+            set -e
             cd /data/p_nerdify/nerdify-nextjs
             cp .env.production .env.local
             git fetch origin main

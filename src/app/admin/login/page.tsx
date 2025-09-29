@@ -25,8 +25,9 @@ export default function AdminLoginPage() {
         throw new Error(j.error || '로그인 실패');
       }
       router.replace('/admin');
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : '로그인 실패';
+      setError(message);
     } finally {
       setLoading(false);
     }

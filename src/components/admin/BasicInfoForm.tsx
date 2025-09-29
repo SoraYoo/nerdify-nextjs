@@ -58,7 +58,7 @@ export default function BasicInfoForm() {
       });
       if (!res.ok) throw new Error("저장 실패");
       alert("기본정보가 저장되었습니다.");
-    } catch (err) {
+    } catch {
       alert("저장 중 오류가 발생했습니다.");
     } finally {
       setSaving(false);
@@ -76,7 +76,7 @@ export default function BasicInfoForm() {
       if (!up.ok) throw new Error('업로드 실패');
       const { url } = await up.json();
       setFormData(prev => ({ ...prev, patreonProfileImageUrl: url }));
-    } catch (err) {
+    } catch {
       alert('업로드 중 오류가 발생했습니다.');
     } finally {
       setUploading(false);

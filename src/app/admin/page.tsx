@@ -1,13 +1,11 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 import BasicInfoForm from '@/components/admin/BasicInfoForm';
 import IntroductionForm from '@/components/admin/IntroductionForm';
 import YouTubeForm from '@/components/admin/YouTubeForm';
 
 export default function AdminPage() {
-  const router = useRouter();
   const [activeTab, setActiveTab] = useState('basic');
 
   useEffect(() => {

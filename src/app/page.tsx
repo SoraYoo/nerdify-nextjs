@@ -1,7 +1,6 @@
 import Header from '@/components/Header';
 import IntroductionSection from '@/components/IntroductionSection';
 import YouTubeSection from '@/components/YouTubeSection';
-import ShopSection from '@/components/ShopSection';
 import MusicSection from '@/components/MusicSection';
 import PatreonSection from '@/components/PatreonSection';
 import Footer from '@/components/Footer';
