@@ -32,7 +32,7 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
             cd /data/p_nerdify/nerdify-nextjs
-            cp .env.production .env.local
+            cp .env.production .env
             git fetch origin main
             git reset --hard origin/main
             npm ci
