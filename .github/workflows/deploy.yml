@@ -1,4 +1,4 @@
-name: Deploy Nerdify to Main
+name: Deploy Nerdify to Main Production
 
 on:
   push:
