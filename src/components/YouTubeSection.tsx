@@ -1,10 +1,41 @@
 import { prisma } from '@/lib/prisma';
 
+function toEmbedUrl(input?: string | null): string | null {
+  if (!input) return null;
+  const s = input.trim();
+  // If it's already just an ID (11 chars typical)
+  const idOnly = /^[a-zA-Z0-9_-]{6,}$/;
+  // Try common URL patterns
+  const patterns = [
+    /youtube\.com\/(?:watch\?v=|embed\/|shorts\/)([a-zA-Z0-9_-]{6,})/,
+    /youtu\.be\/([a-zA-Z0-9_-]{6,})/
+  ];
+  let id: string | null = null;
+  if (idOnly.test(s) && !s.includes('/')) {
+    id = s;
+  } else {
+    for (const re of patterns) {
+      const m = s.match(re);
+      if (m && m[1]) { id = m[1]; break; }
+    }
+    if (!id) {
+      // fallback: try v= param
+      const url = new URL(s, 'https://dummy.base');
+      const v = url.searchParams.get('v');
+      if (v) id = v;
+    }
+  }
+  return id ? `https://www.youtube.com/embed/${id}` : null;
+}
+
 export default async function YouTubeSection() {
   const site = await prisma.site.findUnique({ where: { artistNo: 1 } });
-  const main = site?.mainVideoLink || 'https://www.youtube.com/embed/AJOj6JlmrGg';
+  const main = toEmbedUrl(site?.mainVideoLink) || 'https://www.youtube.com/embed/AJOj6JlmrGg';
   const profile = site?.youtubeProfileLink || 'https://www.youtube.com/';
-  const shorts = [site?.shorts1, site?.shorts2, site?.shorts3, site?.shorts4].filter(Boolean) as string[];
+  const shortsInputs = [site?.shorts1, site?.shorts2, site?.shorts3, site?.shorts4];
+  const shorts = shortsInputs
+    .map((s) => toEmbedUrl(s))
+    .filter((s): s is string => Boolean(s));
 
   return (
     <section id="youtube" className="py-20 bg-black text-white">
@@ -13,7 +44,7 @@ export default async function YouTubeSection() {
           <div className="order-2 lg:order-1">
             <div className="relative aspect-video rounded-lg overflow-hidden">
               <iframe
-                src={`https://www.youtube.com/embed/${main}`}
+                src={main}
                 title="Main YouTube Video"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -45,7 +76,7 @@ export default async function YouTubeSection() {
             {shorts.map((src, idx) => (
               <div key={idx} className="relative aspect-[9/16] rounded-lg overflow-hidden">
                 <iframe
-                  src={`https://www.youtube.com/embed/${src}`}
+                  src={src}
                   title={`YouTube Short ${idx + 1}`}
                   frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

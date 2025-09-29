@@ -76,7 +76,7 @@ export default function YouTubeForm() {
             메인 유튜브 영상 링크 *
           </label>
           <p className="mt-1 text-sm text-gray-500 mb-4">
-            YouTube 영상 URL의 VIDEO_ID만 입력하세요 (예: https://youtube.com/watch?v=VIDEO_ID)
+            YouTube 영상 URL을 입력하세요. (예: https://youtube.com/watch?v=VIDEO_ID)
           </p>
           <input
             type="text"
@@ -111,7 +111,7 @@ export default function YouTubeForm() {
         {/* YouTube Shorts */}
         <div>
           <h3 className="text-lg font-medium text-gray-900 mb-1">유튜브 Shorts</h3>
-          <p className="text-sm text-gray-500 mb-4">YouTube Shorts 주소창에 있는 VIDEO_ID만 입력하세요 (예: https://youtube.com/shorts/VIDEO_ID)</p>
+          <p className="text-sm text-gray-500 mb-4">YouTube Shorts URL을 입력하세요 (예: https://youtube.com/shorts/VIDEO_ID)</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {(['shorts1','shorts2','shorts3','shorts4'] as const).map((key, idx) => (
               <div key={key}>
