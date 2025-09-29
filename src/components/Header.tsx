@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Menu, X, Globe } from 'lucide-react';
 import Link from 'next/link';
 
@@ -8,6 +8,23 @@ import Link from 'next/link';
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLanguageOpen, setIsLanguageOpen] = useState(false);
+  const [mainTitle, setMainTitle] = useState('Sam, Where are you?');
+  const [artistName, setArtistName] = useState('Sam');
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await fetch('/api/site', { cache: 'no-store' });
+        if (res.ok) {
+          const data = await res.json();
+          if (data) {
+            if (data.mainTitle) setMainTitle(data.mainTitle);
+            if (data.artistName) setArtistName(data.artistName);
+          }
+        }
+      } catch {}
+    })();
+  }, []);
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-black/95 backdrop-blur-sm border-b border-gray-800">
@@ -16,14 +33,14 @@ export default function Header() {
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link href="/">
-                <h1 className="text-xl md:text-2xl font-bold text-white custom-title-font">Sam, Where are you?</h1>
+                <h1 className="text-xl md:text-2xl font-bold text-white custom-title-font">{mainTitle}</h1>
             </Link>
           </div>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex space-x-8">
             <a href="#welcome" className="text-white hover:text-gray text-sm font-medium custom-basic-font">
-              Sam,
+              {artistName},
             </a>
             <a href="#youtube" className="text-white hover:text-gray text-sm font-medium custom-basic-font">
               YOUTUBE
@@ -84,7 +101,7 @@ export default function Header() {
                 className="block px-3 py-2 text-sm font-medium text-white hover:text-gray-200 custom-basic-font"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Sam,
+                {artistName},
               </a>
               <a
                 href="#youtube"

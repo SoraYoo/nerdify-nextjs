@@ -1,8 +1,9 @@
-'use client';
-
 import Image from 'next/image';
+import { prisma } from '@/lib/prisma';
 
-export default function PatreonSection() {
+export default async function PatreonSection() {
+  const site = await prisma.site.findUnique({ where: { artistNo: 1 } });
+  const profileImg = site?.patreonProfileImageUrl || '/img/profile-img-vertical.png';
   return (
     <section id="patreon" className="py-20 text-white" style={{ backgroundColor: '#FF7F32' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -41,12 +42,14 @@ export default function PatreonSection() {
             <p className="text-base text-gray-200 mb-8 md:mb-12 leading-tight md:leading-snug">
               Some benefits you&apos;ll have as a Patron are access to a Private Video Call With Us, Behind The Scenes Videos, Recipes, Lifestyle &amp; Travel Content, Decision Making, our Mixes on Soundcloud and much more.
             </p>
-            <button 
-              className="bg-white text-black px-8 py-4 rounded-full font-semibold text-base transition-colors hover:bg-gray-100"
-              onClick={() => window.open('https://www.patreon.com/cw/samwhereareyou', '_blank')}
+            <a 
+              className="inline-block bg-white text-black px-8 py-4 rounded-full font-semibold text-base transition-colors hover:bg-gray-100"
+              href={site?.patreonLink || 'https://www.patreon.com/'}
+              target="_blank"
+              rel="noopener noreferrer"
             >
               Become a Patreon
-            </button>
+            </a>
           </div>
 
           {/* Right Side - Image with Arch Window Frame */}
@@ -62,12 +65,7 @@ export default function PatreonSection() {
                   borderBottomRightRadius: '0px'
                 }}
               >
-                <Image
-                  src="/img/profile-img-vertical.png"
-                  alt="Patreon showcase"
-                  fill
-                  className="object-cover"
-                />
+                <Image src={profileImg} alt="Patreon showcase" fill className="object-cover" />
               </div>
             </div>
           </div>

@@ -1,0 +1,52 @@
+// Prisma schema for Nerdify
+// Run: npx prisma generate && npx prisma migrate dev --name init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Site {
+  artistNo          Int      @id @default(autoincrement())
+  // 기본정보
+  artistName        String
+  instagramLink     String?  @db.VarChar(512)
+  youtubeLink       String?  @db.VarChar(512)
+  spotifyLink       String?  @db.VarChar(512)
+  email             String   @db.VarChar(320)
+  spotifyAlbumLink  String?  @db.VarChar(512)
+  patreonLink       String?  @db.VarChar(512)
+  patreonProfileImageUrl String? @db.VarChar(1024)
+  // 소개 섹션
+  mainImageUrl      String?  @db.VarChar(1024)
+  mainTitle         String?  @db.VarChar(512)
+  mainDescription   String?  @db.Text
+  // 유튜브 섹션
+  mainVideoLink     String?  @db.VarChar(512)
+  youtubeProfileLink String? @db.VarChar(512)
+  shorts1           String?  @db.VarChar(512)
+  shorts2           String?  @db.VarChar(512)
+  shorts3           String?  @db.VarChar(512)
+  shorts4           String?  @db.VarChar(512)
+  // 갤러리 이미지는 콤마 구분 혹은 별도 테이블. 우선 콤마로 저장
+  galleryImageUrls  String?  @db.Text
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model Artist {
+  artistNo      Int      @id @default(autoincrement())
+  id            String   @unique @db.VarChar(128)
+  password      String   @db.VarChar(256)
+  providerId    String?  @db.VarChar(128)
+  websiteOpenYN String   @default("N") @db.Char(1)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  loginDate     DateTime?
+  isDel         String   @default("N") @db.Char(1)
+}

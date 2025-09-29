@@ -35,6 +35,8 @@ jobs:
             cp .env.production .env.local
             git fetch origin main
             git reset --hard origin/main
-            npm install
+            npm ci
+            npx prisma migrate deploy
+            npx prisma generate
             npm run build
             pm2 restart nerdify-nextjs || pm2 start npm --name "nerdify-nextjs" -- run start

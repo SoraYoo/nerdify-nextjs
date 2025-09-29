@@ -1,8 +1,12 @@
-'use client';
-
 import { Instagram, Youtube, Mail } from 'lucide-react';
+import { prisma } from '@/lib/prisma';
 
-export default function Footer() {
+export default async function Footer() {
+  const site = await prisma.site.findUnique({ where: { artistNo: 1 } });
+  const instagram = site?.instagramLink || 'https://instagram.com/';
+  const youtube = site?.youtubeLink || 'https://youtube.com/';
+  const spotify = site?.spotifyLink || 'https://open.spotify.com/';
+  const email = site?.email || 'mailto:hi@example.com';
 
   return (
     <footer className="bg-black text-white py-16">
@@ -11,13 +15,13 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
           {/* Brand Section */}
           <div>
-            <h3 className="text-xl font-bold mb-5" style={{ fontFamily: 'var(--font-playfair)' }}>Sam, Where are you?</h3>
+            <h3 className="text-xl font-bold mb-5" style={{ fontFamily: 'var(--font-playfair)' }}>{site?.mainTitle || 'Sam, Where are you?'}</h3>
             {/* <p className="text-gray-300 mb-6">
               연결하세요! YouTube와 Instagram에서 우리를 찾을 수 있거나 메시지로 연락하세요. 모든 분들께 사랑을 전합니다!
             </p> */}
             <div className="flex space-x-4">
               <a
-                href="https://www.instagram.com/sam.where.are.you/?igsh=bjh2bTNxMGdueHhx#"
+                href={instagram}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-gray-800 hover:bg-gray-700 p-3 rounded-full transition-colors"
@@ -25,7 +29,7 @@ export default function Footer() {
                 <Instagram className="w-5 h-5" />
               </a>
               <a
-                href="https://www.youtube.com/channel/UCXaE07gxYjqtwIyFAsnDI8Q"
+                href={youtube}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-gray-800 hover:bg-gray-700 p-3 rounded-full transition-colors"
@@ -33,7 +37,7 @@ export default function Footer() {
                 <Youtube className="w-5 h-5" />
               </a>
               <a
-                href="https://open.spotify.com/artist/3dD5SbDD4n7xJLYQ2t4Ulv"
+                href={spotify}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-gray-800 hover:bg-gray-700 p-3 rounded-full transition-colors"
@@ -43,7 +47,7 @@ export default function Footer() {
                 </svg>
               </a>
               <a
-                href="mailto:hi@samwhereareyou.art"
+                href={email.startsWith('mailto:') ? email : `mailto:${email}`}
                 className="bg-gray-800 hover:bg-gray-700 p-3 rounded-full transition-colors"
               >
                 <Mail className="w-5 h-5" />
@@ -56,7 +60,7 @@ export default function Footer() {
         <div className="border-t border-gray-800 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="flex items-center space-x-2 text-gray-400 mb-4 md:mb-0">
-              <span>© 2025, Sam, Where are you?</span>
+              <span>© 2025, {site?.mainTitle || 'Sam, Where are you?'}</span>
             </div>
             {/* <div className="flex space-x-6 text-sm">
               <a href="#" className="text-gray-400 hover:text-white transition-colors">이용약관</a>

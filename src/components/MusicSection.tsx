@@ -2,10 +2,10 @@
 
 export default function MusicSection() {
   return (
-    <section id="music" className="py-20 bg-black text-white">
+    <section id="music" className="py-20 bg-white text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-2xl md:text-4xl font-bold mb-6" style={{ fontFamily: 'var(--font-playfair)' }}>
+          <h2 className="text-2xl md:text-4xl font-bold mb-6 text-[#333]" style={{ fontFamily: 'var(--font-playfair)' }}>
             Tunes that we groove to on our trip as slow living DJs
           </h2>
         </div>

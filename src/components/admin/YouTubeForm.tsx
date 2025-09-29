@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function YouTubeForm() {
   const [formData, setFormData] = useState({
@@ -11,6 +11,31 @@ export default function YouTubeForm() {
     shorts3: '',
     shorts4: '',
   });
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await fetch('/api/site', { cache: 'no-store' });
+        if (res.ok) {
+          const data = await res.json();
+          if (data) {
+            setFormData({
+              mainVideoLink: data.mainVideoLink ?? '',
+              youtubeProfileLink: data.youtubeProfileLink ?? '',
+              shorts1: data.shorts1 ?? '',
+              shorts2: data.shorts2 ?? '',
+              shorts3: data.shorts3 ?? '',
+              shorts4: data.shorts4 ?? '',
+            });
+          }
+        }
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -20,12 +45,25 @@ export default function YouTubeForm() {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('YouTube:', formData);
-    // TODO: Save to database
-    alert('유튜브 섹션이 저장되었습니다.');
+    setSaving(true);
+    try {
+      const res = await fetch('/api/site', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+      if (!res.ok) throw new Error('저장 실패');
+      alert('유튜브 섹션이 저장되었습니다.');
+    } catch (err) {
+      alert('저장 중 오류가 발생했습니다.');
+    } finally {
+      setSaving(false);
+    }
   };
+
+  if (loading) return <div>불러오는 중...</div>;
 
   return (
     <div>
@@ -37,19 +75,20 @@ export default function YouTubeForm() {
           <label htmlFor="mainVideoLink" className="block text-sm font-medium text-gray-700 mb-2">
             메인 유튜브 영상 링크 *
           </label>
+          <p className="mt-1 text-sm text-gray-500 mb-4">
+            YouTube 영상 URL의 VIDEO_ID만 입력하세요 (예: https://youtube.com/watch?v=VIDEO_ID)
+          </p>
           <input
-            type="url"
+            type="text"
             id="mainVideoLink"
             name="mainVideoLink"
             value={formData.mainVideoLink}
             onChange={handleInputChange}
             required
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            placeholder="https://youtube.com/watch?v=..."
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-[#333]"
+            placeholder="AJOj6JlmrGg"
           />
-          <p className="mt-1 text-sm text-gray-500">
-            YouTube 영상 URL을 입력하세요 (예: https://youtube.com/watch?v=VIDEO_ID)
-          </p>
+          
         </div>
 
         {/* YouTube Profile Link */}
@@ -64,83 +103,42 @@ export default function YouTubeForm() {
             value={formData.youtubeProfileLink}
             onChange={handleInputChange}
             required
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-[#333]"
             placeholder="https://youtube.com/channel/..."
           />
         </div>
 
         {/* YouTube Shorts */}
         <div>
-          <h3 className="text-lg font-medium text-gray-900 mb-4">유튜브 쇼츠</h3>
+          <h3 className="text-lg font-medium text-gray-900 mb-1">유튜브 Shorts</h3>
+          <p className="text-sm text-gray-500 mb-4">YouTube Shorts 주소창에 있는 VIDEO_ID만 입력하세요 (예: https://youtube.com/shorts/VIDEO_ID)</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label htmlFor="shorts1" className="block text-sm font-medium text-gray-700 mb-2">
-                쇼츠 1
-              </label>
-              <input
-                type="url"
-                id="shorts1"
-                name="shorts1"
-                value={formData.shorts1}
-                onChange={handleInputChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                placeholder="https://youtube.com/shorts/..."
-              />
-            </div>
-
-            <div>
-              <label htmlFor="shorts2" className="block text-sm font-medium text-gray-700 mb-2">
-                쇼츠 2
-              </label>
-              <input
-                type="url"
-                id="shorts2"
-                name="shorts2"
-                value={formData.shorts2}
-                onChange={handleInputChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                placeholder="https://youtube.com/shorts/..."
-              />
-            </div>
-
-            <div>
-              <label htmlFor="shorts3" className="block text-sm font-medium text-gray-700 mb-2">
-                쇼츠 3
-              </label>
-              <input
-                type="url"
-                id="shorts3"
-                name="shorts3"
-                value={formData.shorts3}
-                onChange={handleInputChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                placeholder="https://youtube.com/shorts/..."
-              />
-            </div>
-
-            <div>
-              <label htmlFor="shorts4" className="block text-sm font-medium text-gray-700 mb-2">
-                쇼츠 4
-              </label>
-              <input
-                type="url"
-                id="shorts4"
-                name="shorts4"
-                value={formData.shorts4}
-                onChange={handleInputChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                placeholder="https://youtube.com/shorts/..."
-              />
-            </div>
+            {(['shorts1','shorts2','shorts3','shorts4'] as const).map((key, idx) => (
+              <div key={key}>
+                <label htmlFor={key} className="block text-sm font-medium text-gray-700 mb-2">
+                  Shorts {idx + 1}
+                </label>
+                <input
+                  type="text"
+                  id={key}
+                  name={key}
+                  value={formData[key]}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-[#333]"
+                  placeholder="g3FZqCVz5j8"
+                />
+              </div>
+            ))}
           </div>
         </div>
 
         <div className="flex justify-end">
           <button
             type="submit"
-            className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            disabled={saving}
+            className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-60 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
           >
-            저장하기
+            {saving ? '저장 중...' : '저장하기'}
           </button>
         </div>
       </form>

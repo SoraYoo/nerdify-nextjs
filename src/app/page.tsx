@@ -13,7 +13,7 @@ export default function Home() {
       <main>
         <IntroductionSection />
         <YouTubeSection />
-        <ShopSection />
+        {/* <ShopSection /> */}
         <MusicSection />
         <PatreonSection />
       </main>
