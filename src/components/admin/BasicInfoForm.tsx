@@ -212,6 +212,7 @@ export default function BasicInfoForm() {
                 className="relative overflow-hidden border bg-gray-100"
                 style={{ width: '72px', height: '96px', borderTopLeftRadius: '9999px', borderTopRightRadius: '9999px', borderBottomLeftRadius: '0px', borderBottomRightRadius: '0px' }}
               >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={formData.patreonProfileImageUrl} alt="Patreon Profile" className="w-full h-full object-cover" />
               </div>
             )}

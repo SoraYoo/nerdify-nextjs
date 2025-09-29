@@ -107,6 +107,7 @@ export default function IntroductionForm() {
             />
             {formData.mainImagePreview && (
               <div className="border border-gray-300 rounded-md overflow-hidden aspect-[16/9] h-24">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={formData.mainImagePreview}
                   alt="Preview"

@@ -36,7 +36,8 @@ jobs:
             cp .env.production .env.local
             git fetch origin main
             git reset --hard origin/main
-            npm ci
+            # Try clean install with lockfile; fallback to npm install if lock is out of sync
+            npm ci || npm install
             npx prisma migrate deploy
             npx prisma generate
             npm run build

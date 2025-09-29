@@ -17,7 +17,8 @@ export async function POST(req: Request) {
 
   await prisma.artist.update({ where: { artistNo: artist.artistNo }, data: { loginDate: new Date() } });
 
-  cookies().set(COOKIE_NAME, String(artist.artistNo), { httpOnly: true, sameSite: 'lax', path: '/' });
+  const cookieStore = await cookies();
+  cookieStore.set(COOKIE_NAME, String(artist.artistNo), { httpOnly: true, sameSite: 'lax', path: '/' });
 
   return NextResponse.json({ ok: true });
 }

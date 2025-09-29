@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { prisma } from '@/lib/prisma';
 
 function toEmbedUrl(input?: string | null): string | null {
@@ -68,7 +69,7 @@ export default async function YouTubeSection() {
 
         <div className="mt-20">
           <div className="flex items-center justify-start mb-8">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Youtube_shorts_icon.svg/250px-Youtube_shorts_icon.svg.png" alt="YouTube Shorts" className="w-8 h-8 mr-3" />
+            <Image src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Youtube_shorts_icon.svg/250px-Youtube_shorts_icon.svg.png" alt="YouTube Shorts" width={32} height={32} className="w-8 h-8 mr-3" />
             <span className="text-2xl font-bold text-white" style={{ fontFamily: '"Roboto", "Arial", sans-serif' }}>Shorts</span>
           </div>
 
