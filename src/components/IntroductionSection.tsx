@@ -8,7 +8,7 @@ export default function IntroductionSection() {
       {/* Full Width Image */}
       <div className="relative h-96 lg:h-[600px] w-full">
         <Image
-          src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+          src="/img/banner-img.jpg"
           alt="Sam - Musician and Producer"
           fill
           className="object-cover"

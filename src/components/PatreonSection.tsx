@@ -51,7 +51,7 @@ export default function PatreonSection() {
 
           {/* Right Side - Image with Arch Window Frame */}
           <div className="order-1 lg:order-2">
-            <div className="relative w-full md:w-[75%] h-[448px] md:h-[500px]">
+            <div className="relative w-full md:w-[65%] h-[500px] md:h-[570px]">
               {/* Arch image without decorative frame */}
               <div
                 className="relative w-full h-full overflow-hidden"
@@ -63,7 +63,7 @@ export default function PatreonSection() {
                 }}
               >
                 <Image
-                  src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+                  src="/img/profile-img-vertical.png"
                   alt="Patreon showcase"
                   fill
                   className="object-cover"
