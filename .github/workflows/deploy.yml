@@ -32,11 +32,11 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
             cd /data/p_nerdify/nerdify-nextjs
-            cp .env.production .env
+            cp .env.production .env.local
             git fetch origin main
             git reset --hard origin/main
             npm ci
-            npx prisma migrate deploy
-            npx prisma generate
+            npx prisma migrate deploy --dotenv .env.local
+            npx prisma generate --dotenv .env.local
             npm run build
             pm2 restart nerdify-nextjs || pm2 start npm --name "nerdify-nextjs" -- run start
